@@ -5,18 +5,18 @@
 #include <immintrin.h>
 
 //=============================================
-typedef unsigned long DWORD;
+typedef unsigned DWORD;
 typedef unsigned short WORD;
 typedef long LONG ;
 //=============================================
-
-#pragma pack(push, 1)
 
 struct
 {
     int width  = 800;
     int height = 600;
 } Init;
+
+#pragma pack(push, 1)
 
 struct BITMAPFILEHEADER
 {
@@ -48,6 +48,7 @@ struct BITMAPINFOHEADER
 
 #pragma pack(pop)
 
+
 struct Pixel
 {
     unsigned char alpha;
@@ -61,9 +62,12 @@ struct Img
     int width;
     int height;
     Pixel* imgBuff;
+    BITMAPINFOHEADER* infoHeader;
+    BITMAPFILEHEADER* fileHeader;
 };
 
 
 Img* LoadBitmapFile(char* filename);
-void AlphaBlend (Img* front, Img* back);
+void AlphaBlend (Img* front, Img* back, int x_pos, int y_pos);
 unsigned char getColor (unsigned char frClr, unsigned char frAlp, unsigned char bkClr);
+void saveBmpFile (char* fileName, Img* img);
