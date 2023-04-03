@@ -3,39 +3,49 @@
 #include <cassert>
 #include <cstdio>
 #include <cstdlib>
+#include "string.h"
 
 void imgCtor(char* filename, Img* img)
 {
     img->image.loadFromFile(filename);
     img->height = img->image.getSize().y;
     img->width  = img->image.getSize().x;
-    img->pixels = (Pixel*) img->image.getPixelsPtr();
+    img->pixels = (unsigned int*) img->image.getPixelsPtr();
 }
 
 void AlphaBlend (Img* front, Img* back, int x_pos, int y_pos)
 {
+
     for (int y = 0; y < front->height; y++)
     {
         for (int x = 0; x < front->width; x++)
         {
-            fprintf(stderr, "back %d %d\n", (y_pos + y), x_pos + x);
-            fprintf(stderr, "front %d %d\n", (y), x);
-            Pixel bkPixel = back->pixels[(y_pos + y) * back->width + x_pos + x];
-            Pixel frPixel = front->pixels[y * front->width + x];
+            unsigned int backPixel  =  back->pixels[(y_pos + y) * back->width + x_pos + x];
+            unsigned int frontPixel = front->pixels[y * front->width + x];
 
-            Pixel finalPixel = {bkPixel.alpha, getColor(frPixel.red ,  frPixel.alpha, bkPixel.red),
-                                               getColor(frPixel.blue,  frPixel.alpha, bkPixel.blue),
-                                               getColor(frPixel.green, frPixel.alpha, bkPixel.green)};
+            unsigned char frontAlpha = frontPixel>> 24;
+            unsigned char backAlpha  = backPixel>> 24;
 
+            unsigned int newColor =  backAlpha << 24;
 
-            back->pixels[(y_pos + y) * back->width + x_pos + x] = finalPixel;
+            for (int idx = 0; idx < 17; idx += 8)
+            {
+
+                unsigned char frontColor = ((0xFF << idx) & frontPixel) >> idx;
+                unsigned char backColor  = ((0xFF << idx) & backPixel) >> idx;
+
+                newColor += getColor(frontColor, frontAlpha, backColor) << idx;
+            }
+
+            back->pixels[(y_pos + y) * back->width + x_pos + x] = newColor;
         }
+
     }
 
     back->image.create(back->width, back->height, (sf::Uint8*) back->pixels);
 }
 
-unsigned char getColor (unsigned char frClr, unsigned char frAlp, unsigned char bkClr)
+unsigned char getColor (unsigned char frontClr, unsigned char frontAlpha, unsigned char backClr)
 {
-    return frClr * frAlp + bkClr * (255 - frAlp);
+    return ((unsigned short) frontClr * frontAlpha + (unsigned short) backClr * (255 - frontAlpha))/255;
 }

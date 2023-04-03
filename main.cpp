@@ -1,14 +1,11 @@
 #include "mainUtils.h"
+#include <SFML/Graphics/Image.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <ctime>
 
 int main()
 {
-
-    Img front = {};
-    imgCtor ("img/AskhatCat.bmp", &front);
-
-    Img back = {};
-    imgCtor ("img/Table.bmp", &back);
-
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Blend");
 
     sf::Clock clock;
@@ -26,13 +23,24 @@ int main()
 
 			}
 		}
-        AlphaBlend(&front, &back, 400, 300);
+        Img front = {};
+        imgCtor ("img/AskhatCat.bmp", &front);
 
+        Img back = {};
+        imgCtor ("img/Table.bmp", &back);
+
+        clock.restart();
+        AlphaBlend(&front, &back, 300, 250);
+        sf::Time elapsed = clock.restart();
+        printf ("FPS %f\n", 1/elapsed.asSeconds());
+
+        sf::Texture texture;
+        texture.loadFromImage(back.image);
+        sf::Sprite sprite(texture);
+        window.draw(sprite);
 		window.display();
         window.clear();
 
-        sf::Time elapsed = clock.restart();
-        printf ("FPS %f\n", 1/elapsed.asSeconds());
 
 	}
 

@@ -23,7 +23,7 @@ struct Img
 {
     int width;
     int height;
-    Pixel* pixels;
+    unsigned int* pixels;
     sf::Image image;
 };
 
