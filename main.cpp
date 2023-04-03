@@ -3,16 +3,15 @@
 int main()
 {
 
-    Img* front = LoadBitmapFile("cat.bmp");
-    Img* back = LoadBitmapFile("Table.bmp");
+    Img front = {};
+    imgCtor ("img/AskhatCat.bmp", &front);
 
-	sf::RenderWindow window(sf::VideoMode(Init.width, Init.height), "Blend");
+    Img back = {};
+    imgCtor ("img/Table.bmp", &back);
 
-    sf::Image image;
-    image.create(Init.width, Init.height, sf::Color::Red);
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Blend");
 
     sf::Clock clock;
-
 	while (window.isOpen())
 	{
         window.clear();
@@ -27,14 +26,8 @@ int main()
 
 			}
 		}
+        AlphaBlend(&front, &back, 400, 300);
 
-        AlphaBlend (front, back);
-
-        sf::Texture texture;
-        texture.loadFromImage (image);
-        sf::Sprite sprite(texture);
-
-        window.draw (sprite);
 		window.display();
         window.clear();
 
