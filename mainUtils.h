@@ -27,6 +27,13 @@ struct Img
     sf::Image image;
 };
 
+#define ShowXmmReg(Name) \
+    printf ("-----" # Name  "-----\n");            \
+    for (int Name##_ = 0;Name##_ < 4; ++ Name##_)\
+{                                               \
+    printf ("%X\n", ((unsigned int*) &Name)[Name##_]);        \
+}                                               \
+    printf ("----------\n");
 
 Img* LoadBitmapFile(char* filename);
 void AlphaBlend (Img* front, Img* back, int x_pos, int y_pos);

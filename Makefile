@@ -3,5 +3,5 @@ FLAGS = -fsanitize=address -I/opt/homebrew/Cellar/sfml/2.5.1_2/include -o prog -
 
 
 all:
-	g++ -O2 $(Files) $(FLAGS)
+	g++ -O2 -mavx2 $(Files) $(FLAGS)
 
