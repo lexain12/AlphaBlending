@@ -1,5 +1,6 @@
 #include "mainUtils.h"
 #include <SFML/Config.hpp>
+#include <SFML/System/Clock.hpp>
 #include <cassert>
 #include <cstdio>
 #include <cstdlib>
@@ -9,7 +10,6 @@
 #include <tmmintrin.h>
 #include <xmmintrin.h>
 #include "string.h"
-#define SSE
 #define zero 0xFF
 
 void imgCtor(char* filename, Img* img)
@@ -24,6 +24,7 @@ void imgCtor(char* filename, Img* img)
 
 void AlphaBlend (Img* front, Img* back, int x_pos, int y_pos)
 {
+    sf::Clock clock;
 
     for (int y = 0; y < front->height; y++)
     {
@@ -50,6 +51,8 @@ void AlphaBlend (Img* front, Img* back, int x_pos, int y_pos)
         }
 
     }
+    sf::Time elapsed = clock.restart();
+    printf ("FPS %f\n", 1/elapsed.asSeconds());
 
     back->image.create(back->width, back->height, (sf::Uint8*) back->pixels);
 }
@@ -59,6 +62,7 @@ void AlphaBlend(Img *front, Img *back, int x_pos, int y_pos)
 {
     __m128i Zeros = _mm_set1_epi8(0);
     __m128i _255  = _mm_set1_epi16(255);
+    sf::Clock clock;
 
     for (int y = 0; y < front->height; y++)
     {
@@ -101,6 +105,8 @@ void AlphaBlend(Img *front, Img *back, int x_pos, int y_pos)
         }
 
     }
+    sf::Time elapsed = clock.restart();
+    printf ("FPS %f\n", 1/elapsed.asSeconds());
 
     back->image.create(back->width, back->height, (sf::Uint8*) back->pixels);
 }

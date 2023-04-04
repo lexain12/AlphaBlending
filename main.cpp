@@ -29,10 +29,7 @@ int main()
         Img back = {};
         imgCtor ("img/Table.bmp", &back);
 
-        clock.restart();
         AlphaBlend(&front, &back, 300, 250);
-        sf::Time elapsed = clock.restart();
-        printf ("FPS %f\n", 1/elapsed.asSeconds());
 
         sf::Texture texture;
         texture.loadFromImage(back.image);
