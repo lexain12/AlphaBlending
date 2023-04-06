@@ -30,15 +30,15 @@ void AlphaBlend (Img* front, Img* back, int x_pos, int y_pos)
     {
         for (int x = 0; x < front->width; x++)
         {
-            unsigned int backPixel  =  back->pixels[(y_pos + y) * back->width + x_pos + x];
-            unsigned int frontPixel = front->pixels[y * front->width + x];
+            volatile unsigned int backPixel  =  back->pixels[(y_pos + y) * back->width + x_pos + x];
+            volatile unsigned int frontPixel = front->pixels[y * front->width + x];
 
-            unsigned char frontAlpha = frontPixel>> 24;
-            unsigned char backAlpha  = backPixel>> 24;
+            volatile unsigned char frontAlpha = frontPixel>> 24;
+            volatile unsigned char backAlpha  = backPixel>> 24;
 
-            unsigned int newColor =  backAlpha << 24;
+            volatile unsigned int newColor =  backAlpha << 24;
 
-            for (int idx = 0; idx < 17; idx += 8)
+            for (int idx = 0; idx < 7; idx += 8)
             {
 
                 unsigned char frontColor = ((0xFF << idx) & frontPixel) >> idx;
