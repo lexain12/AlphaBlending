@@ -29,4 +29,4 @@ The performance boost is $5500/1500 = 3.67$ times.
 
 ## Conclusion
 Optimization is a very hard task. The compiler does it, but in some cases we need to do optimization by our own and SIMD instruction is useful instrument for this.
-By this method I increased performance in $3.67$ times and the result worths it.
+By this method I increased performance in $3.67$ times and the result worth it.
