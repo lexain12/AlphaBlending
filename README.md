@@ -1,6 +1,6 @@
 # Alpha blending optimization
 ## General information
-This lab is dedicated to alpha blending algorithm (and to cats), which I have optimized by using SSE instruction set.
+This repository is the next step of "SIMD optimizations" lab. It is dedicated to alpha blending algorithm (and to cats), which I have optimized by using SSE instruction set.
 
 ## Result of Alpha Blending
 ![Picture](img/AlphablendingRes.png)
@@ -17,11 +17,11 @@ To optimize the algorithm, I use the SIMD instructions and calculate four pixels
 ## Measurements
 I measure time, using ```sf::Clock```.
 
-| Compilation flags | Optimization | FPS |
-|-------------------|--------------|-----|
-| -O0               |     None     | 400 |
-| -Ofast            |     None     | 1500|
-| -Ofast            |     SSE      | 5500|
+| Compilation flags | Optimization | FPS | Performance |
+|-------------------|--------------|-----|-------------|
+| -O0               |     None     | 400 |     0.27.   |
+| -Ofast            |     None     | 1500|     1       |
+| -Ofast            |     SSE      | 5500|     3.67    |
 
 The ```-Ofast``` and ``` -O2 ``` has the same FPS in this task, so I put ```-Ofast``` results in table.
 
