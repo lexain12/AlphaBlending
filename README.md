@@ -1,4 +1,4 @@
-# Mandelbrot optimisation
+# Alpha blending optimization
 ## General information
 This lab is dedicated to alpha blending algorithm (and to cats), which I have optimized by using SSE instruction set.
 
@@ -17,7 +17,7 @@ To optimize the algorithm, I use the SIMD instructions and calculate four pixels
 ## Measurements
 I measure time, using ```sf::Clock```.
 
-| Compilation flags | Optimisation | FPS |
+| Compilation flags | Optimization | FPS |
 |-------------------|--------------|-----|
 | -O0               |     None     | 400 |
 | -Ofast            |     None     | 1500|
