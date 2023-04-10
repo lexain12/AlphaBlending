@@ -5,12 +5,6 @@
 #include <cstdint>
 #include <immintrin.h>
 
-//=============================================
-typedef unsigned long DWORD;
-typedef unsigned short WORD;
-typedef long LONG ;
-//=============================================
-
 struct Pixel
 {
     unsigned char alpha;
@@ -39,3 +33,4 @@ Img* LoadBitmapFile(char* filename);
 void AlphaBlend (Img* front, Img* back, int x_pos, int y_pos);
 unsigned char getColor (unsigned char frClr, unsigned char frAlp, unsigned char bkClr);
 void imgCtor(char* filename, Img* img);
+inline void CalculateAndStoreSSE (Img* front, Img* back, int x_pos, int y_pos, int x, int y, __m128i Zeros, __m128i _255);
